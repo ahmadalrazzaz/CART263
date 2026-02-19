@@ -70,16 +70,53 @@ function setup_E() {
 
   function aniC(parentCanvas) {
       console.log("in ani-C -teamE");
+      const container = document.querySelector("#ani_canvE_C")
+      container.style.overflow = "hidden";
 
+      let size = 25;
+
+      function randomColor(){
+        const r = Math.floor(Math.random() * 256);
+        const g = Math.floor(Math.random() * 256);
+        const b = Math.floor(Math.random() * 256);
+        return "rgb(" + r + ", " + g + ", " + b + ")";
+      }
+            
     /*** CALLBACK FOR KEY DOWN */
     windowKeyDownRef = function (e) {
-      parentCanvas.style.backgroundColor = "lightblue";
+      if (e.key === "ArrowUp"){
+        size += 5;
+        e.preventDefault()
+      }
+      else if (e.key === "ArrowDown"){
+        if (size < 5){
+          size = 5;
+        }
+        size -= 5;
+        e.preventDefault()
+      }
+      else if (e.key === " "){
+        container.innerHTML = "";
+        e.preventDefault()
+      }
+      else if (e.key === "Enter"){
+        container.style.backgroundColor = randomColor();
+      }
+      else {
+        const box = document.createElement("div");
+        box.style.width = size + "px";
+        box.style.height = size + "px";
+        box.style.backgroundColor = randomColor();
+        box.style.position = "absolute";
+        box.style.left = Math.random() * (container.offsetWidth - size) + "px";
+        box.style.top = Math.random() * (container.offsetHeight - size) + "px";
+        container.appendChild(box);
+      }
 
-    };
+  };
 
     /*** CALLBACK FOR KEY UP */
     windowKeyUpRef = function (e) {
-      parentCanvas.style.backgroundColor = "white";
 
     };
 
