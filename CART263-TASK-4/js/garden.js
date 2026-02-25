@@ -76,4 +76,35 @@ window.onload = function () {
     bird.animateBird();
   });
 
+// TEAM F WEATHER SYSTEM
+
+// Change the weather state and temperature every 5 seconds
+let weatherStates = ["sunny", "rainy", "cloudy"];
+// Start with sunny weather and 25 degrees
+let currentWeather = new Weather(weatherStates[0], 25);
+
+setInterval(() => {
+
+  // Randomly change weather state
+  currentWeather.state =
+    weatherStates[Math.floor(Math.random() * weatherStates.length)];
+
+  // Randomly change temperature between 15 and 35 degrees
+  currentWeather.temp =
+    Math.floor(Math.random() * 20) + 15;
+
+  // Render the new weather
+  currentWeather.renderWeather();
+
+  const isRaining = currentWeather.state === "rainy";
+
+  for (let i = 0; i < garden.birds.length; i++) {
+
+    if (isRaining) {
+      garden.birds[i].hideBehindNearestFlower(garden.flowers);
+    } else {
+      garden.birds[i].returnToSky();
+    }
+}
+}, 5000);
 };
